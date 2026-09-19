@@ -1,0 +1,370 @@
+{{- define "main" }}
+
+<style>
+/* 搜索结果项样式优化 */
+.searchResults li {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.searchResults li:hover {
+    background-color: var(--code-bg);
+    border-color: var(--primary);
+}
+
+.searchResults li.focus {
+    background-color: var(--code-bg);
+    border-color: var(--primary);
+}
+
+/* 搜索结果项内容 */
+.search-result-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.search-result-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* 标签样式 */
+.search-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.search-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    background-color: var(--primary);
+    color: var(--code-bg);
+    border-radius: 4px;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+}
+
+.search-tag:hover {
+    opacity: 1;
+}
+
+/* 关键词高亮 */
+mark {
+    background-color: #ffeb3b;
+    color: #000;
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+</style>
+
+<header class="page-header">
+    <h1>{{- (printf "%s&nbsp;" .Title ) | htmlUnescape -}}
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </h1>
+    {{- if .Description }}
+    <div class="post-description">
+        {{ .Description }}
+    </div>
+    {{- end }}
+    {{- if not (.Param "hideMeta") }}
+    <div class="post-meta">
+        {{- partial "translation_list.html" . -}}
+    </div>
+    {{- end }}
+</header>
+
+<div id="searchbox" class="searchbox">
+    <input id="searchInput" disabled placeholder="{{ .Params.placeholder | default (printf "%s ↵" .Title) }}"
+        aria-label="search" type="search" autocomplete="off" maxlength="64">
+    <ul id="searchResults" class="searchResults" aria-label="search results"></ul>
+</div>
+
+<script>
+// ==================== 搜索数据管理 ====================
+let searchDataMap = {};
+
+const loadSearchData = async () => {
+    try {
+        const response = await fetch('../index.json');
+        if (response.ok) {
+            const data = await response.json();
+            data.forEach(item => {
+                searchDataMap[item.title] = {
+                    tags: item.tags || [],
+                    categories: item.categories || [],
+                    content: item.content || ''
+                };
+            });
+            console.log('✓ Search data loaded. Items:', Object.keys(searchDataMap).length);
+        }
+    } catch (error) {
+        console.error('Failed to load search data:', error);
+    }
+};
+
+// 页面加载时初始化搜索数据
+window.addEventListener('load', loadSearchData);
+
+// ==================== 关键词高亮函数 ====================
+const highlightKeyword = (text, keyword) => {
+    if (!keyword || !text) return text;
+    
+    // 转义特殊字符
+    const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escapedKeyword})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+};
+
+// ==================== 搜索结果增强 ====================
+const enhanceSearchResult = (li, searchQuery) => {
+    if (!li || li.hasAttribute('data-enhanced')) return;
+    
+    // 获取标题和链接
+    const titleNode = li.childNodes[0];
+    const link = li.querySelector('.entry-link');
+    
+    if (!titleNode || !link) return;
+    
+    const title = titleNode.textContent.trim();
+    const itemData = searchDataMap[title];
+    
+    // 标记为已处理
+    li.setAttribute('data-enhanced', 'true');
+    
+    // 创建新的结果容器
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'search-result-content';
+    
+    // 创建标题容器
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'search-result-title';
+    
+    // 创建标题文本元素并应用高亮
+    const titleSpan = document.createElement('span');
+    if (searchQuery) {
+        titleSpan.innerHTML = highlightKeyword(title, searchQuery);
+    } else {
+        titleSpan.textContent = title;
+    }
+    
+    titleDiv.appendChild(titleSpan);
+    titleDiv.appendChild(link.cloneNode(true));
+    
+    contentDiv.appendChild(titleDiv);
+    
+    // 添加标签（如果有）
+    if (itemData && itemData.tags && itemData.tags.length > 0) {
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'search-tags';
+        
+        itemData.tags.forEach(tag => {
+            const tagSpan = document.createElement('span');
+            tagSpan.className = 'search-tag';
+            
+            if (searchQuery) {
+                tagSpan.innerHTML = highlightKeyword(tag, searchQuery);
+            } else {
+                tagSpan.textContent = tag;
+            }
+            
+            tagsDiv.appendChild(tagSpan);
+        });
+        
+        contentDiv.appendChild(tagsDiv);
+    }
+    
+    // 清空 li 并重新组织结构
+    li.innerHTML = '';
+    li.appendChild(contentDiv);
+    li.appendChild(link.cloneNode(true)); // 保留链接以支持导航
+};
+
+// ==================== 监听 renderResults 函数 ====================
+const setupRenderResultsEnhancement = () => {
+    // 延迟以确保 fastsearch.js 已加载
+    setTimeout(() => {
+        // 获取搜索输入框和结果列表
+        const sInput = document.getElementById('searchInput');
+        const resList = document.getElementById('searchResults');
+        
+        if (!sInput || !resList) return;
+        
+        // 创建观察者来监听 searchResults 的子元素变化
+        const observer = new MutationObserver((mutations) => {
+            // 获取当前的搜索查询
+            const searchQuery = sInput.value.trim();
+            
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'childList') {
+                    // 检查新添加的 <li> 元素
+                    Array.from(mutation.addedNodes).forEach(node => {
+                        if (node.nodeType === 1 && node.tagName === 'LI') {
+                            enhanceSearchResult(node, searchQuery);
+                        }
+                    });
+                }
+            });
+        });
+        
+        // 观察配置
+        observer.observe(resList, {
+            childList: true,
+            subtree: false
+        });
+        
+        console.log('✓ Search result enhancement observer initialized');
+    }, 500);
+};
+
+// 初始化增强功能
+window.addEventListener('load', setupRenderResultsEnhancement);
+
+// ==================== 搜索状态持久化 ====================
+const SEARCH_STATE_KEY = 'geology_blog_search_state';
+const FROM_SEARCH_KEY = 'geology_blog_from_search';
+const STATE_EXPIRY = 5 * 60 * 1000; // 搜索结果恢复有效期 5 分钟
+
+const saveSearchState = () => {
+    const sInput = document.getElementById('searchInput');
+    const resList = document.getElementById('searchResults');
+    if (!sInput || !resList) return;
+
+    const query = sInput.value.trim();
+    // 只在有实际搜索且有结果时才保存
+    if (!query || resList.children.length === 0) return;
+
+    const state = {
+        query: query,
+        resultsHTML: resList.innerHTML,
+        timestamp: Date.now()
+    };
+
+    try {
+        sessionStorage.setItem(SEARCH_STATE_KEY, JSON.stringify(state));
+        // 写入来源标记，供文章页判断是否来自搜索
+        sessionStorage.setItem(FROM_SEARCH_KEY, JSON.stringify({ timestamp: Date.now() }));
+    } catch (e) {
+        // sessionStorage 在某些隐私模式下可能不可用
+    }
+};
+
+const clearSearchState = () => {
+    try {
+        sessionStorage.removeItem(SEARCH_STATE_KEY);
+        sessionStorage.removeItem(FROM_SEARCH_KEY);
+    } catch (e) {}
+};
+
+const restoreSearchState = () => {
+    const sInput = document.getElementById('searchInput');
+    const resList = document.getElementById('searchResults');
+    if (!sInput || !resList) return false;
+
+    // 避免覆盖用户正在浏览的搜索结果
+    if (sInput.value.trim()) return false;
+
+    try {
+        const savedState = sessionStorage.getItem(SEARCH_STATE_KEY);
+        if (!savedState) return false;
+
+        const state = JSON.parse(savedState);
+        if (Date.now() - state.timestamp > STATE_EXPIRY) {
+            clearSearchState();
+            return false;
+        }
+
+        sInput.value = state.query;
+        resList.innerHTML = state.resultsHTML;
+
+        // 标记已恢复的项为已增强
+        resList.querySelectorAll('li').forEach(li => {
+            li.setAttribute('data-enhanced', 'true');
+        });
+
+        sInput.focus();
+        // 回到搜索页后清除来源标记
+        sessionStorage.removeItem(FROM_SEARCH_KEY);
+        return true;
+    } catch (e) {
+        console.error('Failed to restore search state:', e);
+        clearSearchState();
+    }
+    return false;
+};
+
+// ==================== 事件监听 ====================
+document.addEventListener('DOMContentLoaded', () => {
+    // (A) 拦截搜索结果点击 — 在导航前保存状态
+    const resList = document.getElementById('searchResults');
+    if (resList) {
+        resList.addEventListener('click', (e) => {
+            const link = e.target.closest('.entry-link');
+            if (link) {
+                saveSearchState();
+            }
+        });
+    }
+
+    // (B) 页面隐藏时保存（标签切换、菜单导航等）
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            saveSearchState();
+        }
+    });
+
+    // (C) 页面卸载前的最后保险
+    window.addEventListener('beforeunload', saveSearchState);
+
+    // (D) 用户清空搜索框时清除状态
+    const sInput = document.getElementById('searchInput');
+    if (sInput) {
+        sInput.addEventListener('search', () => {
+            if (!sInput.value.trim()) {
+                clearSearchState();
+            }
+        });
+    }
+});
+
+// (E) 处理页面显示 — 区分 bfcache 恢复和全新加载
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        // bfcache 恢复：DOM 状态完整，仅补充缺失的增强
+        const sInput = document.getElementById('searchInput');
+        const resList = document.getElementById('searchResults');
+        if (sInput && resList) {
+            const query = sInput.value.trim();
+            resList.querySelectorAll('li:not([data-enhanced])').forEach(li => {
+                enhanceSearchResult(li, query);
+            });
+            sInput.focus();
+        }
+        return;
+    }
+    // 全新页面加载（用户通过前进/后退导航到搜索页）
+    restoreSearchState();
+});
+
+// (F) 初始加载时尝试恢复
+window.addEventListener('load', () => {
+    setTimeout(restoreSearchState, 200);
+});
+
+console.log('✓ Advanced search enhancement script loaded');
+</script>
+
+{{- end }}{{/* end main */}}

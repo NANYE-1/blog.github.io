@@ -1,0 +1,115 @@
+baseURL = "https://NANYE001.github.io/"
+locale = "zh-cn"
+title = "流光拓影"
+theme = "PaperMod"
+
+[pagination]
+pagerSize = 10
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[params]
+math = true
+author = "NANYE001"
+description = "记录地质学习、科研笔记与技术分享"
+
+# 主题设置
+defaultTheme = "auto"
+disableThemeToggle = false
+
+# 首页设置
+ShowReadingTime = true
+ShowShareButtons = true
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+ShowWordCount = true
+ShowToc = true
+ShowRssButtonInSectionTermList = true
+
+# 搜索支持
+fuseOpts = { isCaseSensitive = false, shouldSort = true, location = 0, distance = 1000, threshold = 0.4, minMatchCharLength = 2, keys = ["title", "permalink", "summary", "content", "tags", "categories"] }
+
+# 首页个人简介模式
+[params.profileMode]
+enabled = true
+title = "流光拓影"
+subtitle = "地质学习 · 科研笔记 · 技术分享"
+
+imageUrl = "/images/avatar.jpg"
+imageTitle = "头像"
+imageWidth = 180
+imageHeight = 180
+
+[[params.profileMode.buttons]]
+name = "文章"
+url = "/posts"
+
+[[params.profileMode.buttons]]
+name = "搜索"
+url = "/search"
+
+[[params.profileMode.buttons]]
+name = "归档"
+url = "/archives"
+
+# 社交链接
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/NANYE001"
+
+# 菜单栏
+[[menu.main]]
+identifier = "posts"
+name = "文章"
+url = "/posts/"
+weight = 10
+
+[[menu.main]]
+identifier = "search"
+name = "搜索"
+url = "/search/"
+weight = 20
+
+[[menu.main]]
+identifier = "archives"
+name = "归档"
+url = "/archives/"
+weight = 30
+
+[[menu.main]]
+identifier = "tags"
+name = "标签"
+url = "/tags/"
+weight = 40
+
+[[menu.main]]
+identifier = "categories"
+name = "分类"
+url = "/categories/"
+weight = 50
+
+[[menu.main]]
+identifier = "about"
+name = "关于"
+url = "/about/"
+weight = 60
+
+[markup]
+
+[markup.goldmark]
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+lineNos = true
+codeFences = true
+guessSyntax = true
+style = "github"
+
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 4
+ordered = false

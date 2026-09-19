@@ -1,0 +1,46 @@
+/* 标题下方标签样式 */
+.post-tags-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.post-tags-label {
+    color: var(--secondary);
+    font-size: 0.95rem;
+    margin-right: 2px;
+}
+
+a.post-tag-header {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 999px;
+    background: var(--tag-bg);
+    color: var(--tag-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+a.post-tag-header:hover {
+    background: var(--tag-bg-hover);
+    text-decoration: none;
+}
+
+/* 适配浅色/深色模式 */
+:root {
+    --tag-bg: #e8edf3;
+    --tag-bg-hover: #d0d8e2;
+    --tag-color: #3a4f6b;
+}
+
+[data-theme="dark"] {
+    --tag-bg: #2a3340;
+    --tag-bg-hover: #3d4858;
+    --tag-color: #a0b8d0;
+}

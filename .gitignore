@@ -1,0 +1,16 @@
+# Hugo build output
+/public/
+
+# Hugo build lock
+.hugo_build.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Local AI assistant settings
+.claude/

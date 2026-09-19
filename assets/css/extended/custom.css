@@ -1,0 +1,121 @@
+/* ============================================
+ * 流光拓影 — 列表页质感增强
+ * 幽灵按钮 / 卡片悬浮 / 标签胶囊
+ * ============================================ */
+
+/* ==========================================
+ * 1. 全局变量
+ * ========================================== */
+
+:root {
+    --accent: #657480;
+    --accent-light: rgba(101, 116, 128, 0.18);
+    --btn-hover-text: #ffffff;
+}
+
+[data-theme="dark"] {
+    --accent: #8a9298;
+    --accent-light: rgba(138, 146, 152, 0.18);
+    --btn-hover-text: rgb(29, 30, 32);
+}
+
+
+/* ==========================================
+ * 2. 幽灵按钮
+ * ========================================== */
+
+.button {
+    background: transparent !important;
+    border: 1.5px solid var(--accent) !important;
+    color: var(--accent) !important;
+    border-radius: 999px !important;
+    padding: 0.5rem 1.4rem !important;
+    font-weight: 500;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.15s ease;
+}
+
+.button:hover {
+    background: var(--accent) !important;
+    color: var(--btn-hover-text) !important;
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================
+ * 3. 文章卡片悬浮
+ * ========================================== */
+
+.post-entry {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-entry:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .post-entry:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ==========================================
+ * 4. 标签胶囊
+ * ========================================== */
+
+.entry-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.entry-tag {
+    display: inline-block;
+    padding: 3px 14px;
+    border-radius: 999px;
+    background: var(--accent-light);
+    color: #4a5a6a;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+[data-theme="dark"] .entry-tag {
+    color: #b0b8be;
+}
+
+.entry-tag:hover {
+    background: var(--accent);
+    color: var(--btn-hover-text);
+    text-decoration: none;
+}
+
+/* ==========================================
+ * 5. 其他美化与交互
+ * ========================================== */
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 现代化滚动条定制 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--tertiary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
+}

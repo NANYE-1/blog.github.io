@@ -1,0 +1,62 @@
+/* ============================================
+ * 字体配置
+ * - 标题：霞鹜文楷 Lite (CDN 加载)
+ * - 正文：各平台系统原生中文字体
+ * ============================================ */
+
+/* --- 霞鹜文楷 Lite Web 字体 --- */
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.7.0/style.css');
+
+/* --- 正文字体栈（覆盖默认） --- */
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+                 "WenQuanYi Micro Hei", "Noto Sans SC", "Heiti SC",
+                 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+                 sans-serif;
+}
+
+/* --- 标题使用霞鹜文楷 --- */
+
+/* 首页 Profile 模式博客名 */
+.profile .profile_inner h1 {
+    font-family: "LXGW WenKai Lite", "STKaiti", "KaiTi", "楷体", serif;
+}
+
+/* 导航栏博客名 */
+.header .logo a {
+    font-family: "LXGW WenKai Lite", "STKaiti", "KaiTi", "楷体", serif;
+}
+
+/* 文章详情页标题 */
+.post-title {
+    font-family: "LXGW WenKai Lite", "STKaiti", "KaiTi", "楷体", serif;
+}
+
+/* 文章列表标题 */
+.entry-header h2 {
+    font-family: "LXGW WenKai Lite", "STKaiti", "KaiTi", "楷体", serif;
+}
+
+/* 第一篇文章的大标题 */
+.first-entry .entry-header h2 {
+    font-family: "LXGW WenKai Lite", "STKaiti", "KaiTi", "楷体", serif;
+}
+
+/* 归档页文章标题 */
+.archive-entry-title {
+    font-family: "LXGW WenKai Lite", "STKaiti", "KaiTi", "楷体", serif;
+}
+
+/* 正文中的各级标题 */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    font-family: "LXGW WenKai Lite", "STKaiti", "KaiTi", "楷体", serif;
+}
+
+/* 通用 h1 */
+h1 {
+    font-family: "LXGW WenKai Lite", "STKaiti", "KaiTi", "楷体", serif;
+}
