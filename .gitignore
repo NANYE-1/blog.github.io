@@ -4,6 +4,10 @@
 # Hugo build lock
 .hugo_build.lock
 
+# Hugo local cache and project-local tools
+.hugo_cache/
+.tools/
+
 # OS files
 .DS_Store
 Thumbs.db

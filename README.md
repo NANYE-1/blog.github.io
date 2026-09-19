@@ -6,7 +6,7 @@
 
 基于 [Hugo](https://gohugo.io/) + [PaperMod](https://github.com/adityatelange/hugo-PaperMod) 构建的个人博客，记录地质学学习笔记、科研过程与技术分享。
 
-🔗 **线上地址**: [https://NANYE001.github.io/](https://NANYE001.github.io/)
+🔗 **线上地址**: [https://nanye-1.github.io/blog.github.io/](https://nanye-1.github.io/blog.github.io/)
 
 ## ✨ 特性
 
@@ -33,7 +33,7 @@
 
 ```bash
 # 克隆仓库（含主题子模块）
-git clone --recurse-submodules https://github.com/NANYE001/NANYE001.github.io.git geology-blog
+git clone --recurse-submodules https://github.com/NANYE-1/blog.github.io.git geology-blog
 cd geology-blog
 
 # 如果已经克隆但缺少子模块
@@ -42,25 +42,28 @@ git submodule update --init --recursive
 
 ### 本地开发
 
-```bash
+```powershell
+# 首次使用：安装项目固定版本的 Hugo Extended
+.\scripts\install-hugo.ps1
+
 # 启动开发服务器（包含草稿）
-hugo server -D
+.\scripts\serve.ps1 -IncludeDrafts
 
 # 启动开发服务器（仅已发布文章）
-hugo server
+.\scripts\serve.ps1
 
 # 创建新文章
-hugo new posts/my-topic.md
+.\.tools\hugo\hugo.exe new content posts/my-topic.md
 # 或创建带图片的文章
-hugo new posts/my-topic/index.md
+.\.tools\hugo\hugo.exe new content posts/my-topic/index.md
 ```
 
-访问 `http://localhost:1313` 预览站点。
+访问 `http://localhost:1313/blog.github.io/` 预览站点。
 
 ### 构建
 
-```bash
-hugo
+```powershell
+.\scripts\build.ps1
 ```
 
 生成的静态文件位于 `/public/` 目录，可直接部署到任意静态托管服务。
