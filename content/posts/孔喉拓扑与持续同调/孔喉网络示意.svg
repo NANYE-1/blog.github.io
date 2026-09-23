@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500" role="img" aria-labelledby="title desc">
+  <title id="title">孔喉网络连接方式示意</title>
+  <desc id="desc">左侧六个节点形成两个不相连的链，四条边，没有回路；右侧六个节点用七条边相连，形成两个独立回路。图中未表示孔喉尺寸或导流能力。</desc>
+  <rect width="1000" height="500" rx="20" fill="#f5f7f9"/>
+  <g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#213547">
+    <text x="500" y="49" font-size="25" text-anchor="middle" font-weight="700">连接方式，是孔喉结构的另一层信息</text>
+    <rect x="30" y="79" width="455" height="338" rx="14" fill="#fff" stroke="#d7e1e8"/>
+    <rect x="515" y="79" width="455" height="338" rx="14" fill="#fff" stroke="#d7e1e8"/>
+    <text x="257" y="119" font-size="22" text-anchor="middle">A · 两个链状分量</text>
+    <text x="742" y="119" font-size="22" text-anchor="middle">B · 一个连通分量，两个回路</text>
+    <g stroke="#8b9baa" stroke-width="9" stroke-linecap="round">
+      <path d="M110 182 H390 M110 292 H390"/>
+    </g>
+    <g stroke="#318b8b" stroke-width="9" stroke-linecap="round" fill="none">
+      <path d="M600 182 H880 V292 H600 Z M740 182 V292"/>
+    </g>
+    <g fill="#60778c" stroke="#fff" stroke-width="3">
+      <circle cx="110" cy="182" r="19"/><circle cx="250" cy="182" r="19"/><circle cx="390" cy="182" r="19"/>
+      <circle cx="110" cy="292" r="19"/><circle cx="250" cy="292" r="19"/><circle cx="390" cy="292" r="19"/>
+    </g>
+    <g fill="#247a7a" stroke="#fff" stroke-width="3">
+      <circle cx="600" cy="182" r="19"/><circle cx="740" cy="182" r="19"/><circle cx="880" cy="182" r="19"/>
+      <circle cx="600" cy="292" r="19"/><circle cx="740" cy="292" r="19"/><circle cx="880" cy="292" r="19"/>
+    </g>
+    <text x="257" y="359" text-anchor="middle" font-size="21">V = 6　E = 4　β₀ = 2　β₁ = 0</text>
+    <text x="742" y="359" text-anchor="middle" font-size="21">V = 6　E = 7　β₀ = 1　β₁ = 2</text>
+    <text x="257" y="390" text-anchor="middle" font-size="17" fill="#586b7a">节点代表孔体，线代表喉道</text>
+    <text x="742" y="390" text-anchor="middle" font-size="17" fill="#586b7a">回路提供连接冗余，流量仍需验证</text>
+    <text x="500" y="459" text-anchor="middle" font-size="18" fill="#586b7a">抽象图示 · 未编码半径、体积和导流能力 · 不代表 CT 或渗流实验结果</text>
+  </g>
+</svg>
