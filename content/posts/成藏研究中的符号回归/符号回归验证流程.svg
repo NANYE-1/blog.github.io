@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="780" viewBox="0 0 1000 780" role="img" aria-labelledby="title desc">
+  <title id="title">符号回归的成藏研究验证流程</title>
+  <desc id="desc">先明确观测目标并按井或区块划分，在训练侧完成量纲处理、候选搜索、分组验证与稳定性分析。锁定公式后，使用独立测试井评价误差、趋势和适用范围。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#567b91"/></marker>
+  </defs>
+  <rect width="1000" height="780" rx="20" fill="#f4f7f9"/>
+  <g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#223a49" text-anchor="middle">
+    <text x="500" y="46" font-size="28" font-weight="700">从候选表达式到可检验的经验公式</text>
+    <rect x="170" y="72" width="660" height="91" rx="14" fill="#fff" stroke="#cbd9e2"/>
+    <text x="500" y="108" font-size="24" font-weight="700">明确观测目标 · 按井或区块划分</text>
+    <text x="500" y="141" font-size="20" fill="#526d7e">核对标签来源、实验条件、单位和独立样本</text>
+    <path d="M500 164 V193" stroke="#567b91" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="40" y="207" width="920" height="302" rx="16" fill="#e9f2f3" stroke="#92b9bd"/>
+    <text x="500" y="244" font-size="24" font-weight="700">训练侧：搜索、选择与稳定性检查</text>
+    <rect x="72" y="266" width="256" height="110" rx="12" fill="#fff"/>
+    <rect x="372" y="266" width="256" height="110" rx="12" fill="#fff"/>
+    <rect x="672" y="266" width="256" height="110" rx="12" fill="#fff"/>
+    <text x="200" y="305" font-size="23" font-weight="700">量纲与定义域</text>
+    <text x="200" y="341" font-size="20">变量、变换、地质约束</text>
+    <text x="500" y="305" font-size="23" font-weight="700">候选公式搜索</text>
+    <text x="500" y="341" font-size="20">误差与复杂度的折中</text>
+    <text x="800" y="305" font-size="23" font-weight="700">分组内部验证</text>
+    <text x="800" y="341" font-size="20">各折重新搜索与拟合</text>
+    <path d="M332 320 H363 M632 320 H663" fill="none" stroke="#567b91" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="500" y="423" font-size="22">改变随机种子 · 按组重采样 · 比较结构、系数和预测</text>
+    <text x="500" y="465" font-size="20" fill="#526d7e">候选选择与预处理均在训练侧确定</text>
+    <path d="M500 510 V540" stroke="#567b91" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="170" y="554" width="660" height="66" rx="12" fill="#244f63"/>
+    <text x="500" y="596" font-size="25" font-weight="700" fill="#fff">锁定公式、处理规则与适用范围</text>
+    <path d="M500 621 V650" stroke="#567b91" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="170" y="664" width="660" height="89" rx="14" fill="#fff" stroke="#cbd9e2"/>
+    <text x="500" y="701" font-size="24" font-weight="700">独立测试井 / 区块</text>
+    <text x="500" y="734" font-size="20" fill="#526d7e">报告原单位误差、逐井残差、趋势及无效预测</text>
+  </g>
+</svg>
